@@ -17,3 +17,10 @@ export function getPokemon(name) {
     .then(res => res.json())
     .catch(error => console.log('Error while fetching:', error))
 }
+
+export function getPokemonTypes() {
+    return fetch(`${BASE_URL}/type`)
+    .then(res => res.json())
+    .catch(error => console.log('Error while fetching:', error))
+
+}

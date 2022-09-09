@@ -52,6 +52,7 @@ export default function Home() {
     const [filteredPokemon, setFilteredPokemon] = useState([]);
     const [selectedPokemon, setSelectedPokemon] = useState("bulbasaur")
     const [currentPokemon, setCurrentPokemon] = useState([]);
+    const [listOfTypes, setListOfTypes] = useState([]);
 
     // -------------------------------------- //
     // This handles which generation we're on //
@@ -78,6 +79,18 @@ export default function Home() {
         async function getPokemon(selectedPokemon) {
             setCurrentPokemon([]);
             const pokemonObject = await pokemonService.getPokemon(selectedPokemon);
+            pokemonObject.moves.sort((a,b) => a.version_group_details[0].level_learned_at > b.version_group_details[0].level_learned_at ? 1:-1);
+            pokemonObject.moves.sort((a,b) => {
+                if (a.version_group_details[0].level_learned_at === b.version_group_details[0].level_learned_at) {
+                    return a.version_group_details[0].move_learn_method.name > b.version_group_details[0].move_learn_method.name ? 1:-1
+                }
+            });
+            pokemonObject.moves.sort((a,b) => {
+                if (a.version_group_details[0].level_learned_at === b.version_group_details[0].level_learned_at && a.version_group_details[0].move_learn_method.name === b.version_group_details[0].move_learn_method.name) {
+                    return a.move.name > b.move.name ? 1:-1
+                }
+            });
+
             setCurrentPokemon(pokemonObject);
         } getPokemon(selectedPokemon);
     }, [selectedPokemon])
@@ -98,6 +111,12 @@ export default function Home() {
             const initialPoke = await pokemonService.getInitialPokemon();
             setFilteredPokemon(initialPoke.results);
         } getInitialPokemon();
+
+        async function getPokemonType() {
+            const pokeTypes = await pokemonService.getPokemonTypes();
+            pokeTypes.results.sort((a,b) => a.name > b.name ? 1:-1);
+            setListOfTypes(pokeTypes.results);
+        } getPokemonType();
     }, [])
 
     // ----------------------------------------------------------------------------------- //
@@ -118,20 +137,42 @@ export default function Home() {
 
     return (
         <div>
-            <select onChange={handleGen}>
-                <option value="G1">Generation 1</option>
-                <option value="G2">Generation 2</option>
-                <option value="G3">Generation 3</option>
-                <option value="G4">Generation 4</option>
-                <option value="G5">Generation 5</option>
-                <option value="G6">Generation 6</option>
-                <option value="G7">Generation 7</option>
-            </select>
-            <br/>
-            <select onChange={handlePokemon}>
-                {filteredPokemon && filteredPokemon.map(pokemon => 
-                <option value={pokemon.name}>{pokemon.name}</option>)}
-            </select>
+            <div>
+                <h3>Filter By:</h3>
+                <input type="text" placeholder="Search.."></input>
+                <br/>
+                <button>Generation</button>
+                <button>Type</button>
+                <button>Both</button>
+                <button>None</button>
+
+            </div>
+            <br />
+            <div>
+                <select onChange={handleGen}>
+                    <option value="G1">Generation 1</option>
+                    <option value="G2">Generation 2</option>
+                    <option value="G3">Generation 3</option>
+                    <option value="G4">Generation 4</option>
+                    <option value="G5">Generation 5</option>
+                    <option value="G6">Generation 6</option>
+                    <option value="G7">Generation 7</option>
+                </select>
+            </div>
+            
+            <div>
+                <select>
+                    {listOfTypes.length && listOfTypes.map(type =>
+                        <option>{type.name}</option>)}
+                </select>
+            </div>
+
+            <div>
+                <select onChange={handlePokemon}>
+                    {filteredPokemon && filteredPokemon.map(pokemon => 
+                    <option value={pokemon.name}>{pokemon.name}</option>)}
+                </select>
+            </div>
             <div>
                 {currentPokemon.sprites == null ? "" : <img src={currentPokemon.sprites.front_default} alt="" />}
                 <h3>Basic Info:</h3>
@@ -142,8 +183,14 @@ export default function Home() {
             </div>
             <div>
                 <h3>Base Stats:</h3>
-                {currentPokemon.length && currentPokemon.stats.map(currentPoke => 
-                    <p>{currentPoke.stat.name} </p>
+                    {Object.keys(currentPokemon).length && currentPokemon.stats.map(currentPoke => 
+                    <p>{currentPoke.stat.name} | {currentPoke.base_stat}</p>
+                    )}
+            </div>
+            <div>
+                <h3>Move List:</h3>
+                    {Object.keys(currentPokemon).length && currentPokemon.moves.map(moveItem => 
+                    <p>{moveItem.move.name} | {moveItem.version_group_details[0].level_learned_at} | {moveItem.version_group_details[0].move_learn_method.name}</p>
                     )}
             </div>
         </div>

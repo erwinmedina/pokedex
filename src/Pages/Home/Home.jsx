@@ -1,4 +1,5 @@
 import "./Home.css"
+
 import * as pokemonService from "../../Utilities/pokemon-service"
 import { useEffect, useState } from "react"
 
@@ -74,6 +75,12 @@ export default function Home() {
     function handlePokemon(event) {
         setSelectedPokemon(event.target.value);
     }
+
+    function handleRandom() {
+        var index = Math.floor(Math.random() * allPokemon.length);
+        console.log(allPokemon[index])
+        setSelectedPokemon(allPokemon[index].name);
+    }
     
     useEffect(function() {
         async function getPokemon(selectedPokemon) {
@@ -145,6 +152,7 @@ export default function Home() {
                 <button>Type</button>
                 <button>Both</button>
                 <button>None</button>
+                <button onClick={handleRandom}>RANDOM</button>
 
             </div>
             <br />

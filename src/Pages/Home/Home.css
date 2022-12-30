@@ -1,0 +1,122 @@
+body {
+    background: rgb(215,65,65);
+    background: radial-gradient(circle, rgba(215,65,65,1) 0%, rgba(150,148,233,1) 100%);   
+    height: 100vw;
+}
+.random_button {
+    font-size: 50px;
+}
+.poke_selector > div {
+    margin: 0 auto;
+    width: auto !important;
+}
+.pokeSprite {
+    margin: 10px;
+    transition: 1s;
+}
+.container {
+    display: flex;
+    justify-content:flex-start;
+
+}
+
+.table_basic {
+    margin: 20px;
+    border-radius: 20px;
+    border: 2px solid rgba(0,0,0,.25);
+}
+.table_base_stats {
+    margin: 20px;
+    border-radius: 20px;
+    border: 2px solid rgba(0,0,0,.25);
+}
+.table_moves_list {
+    margin: 20px 20px 20px 0;
+    border-radius: 0px 20px 20px 0;
+}
+.div_for_buttons {
+    margin: 0 auto;
+}
+
+.table_css {
+    background: white;
+    max-height: 350px;
+    max-width: 400px;
+    box-sizing: initial;
+    overflow: scroll;
+}
+.basic_info {
+    width: 400px;
+    height: 100px;
+    margin: 0;
+}
+.table_sprite_row > tr, .table_sprite_row > tr > th {
+    vertical-align: middle;
+
+}
+.table_sprite_row > tr > th:first-child {
+    background: rgba(0,0,0,.1);
+    text-align: center;
+    width: 50%;
+}
+.table_sprite_row > tr > th:last-child {
+    background: rgba(0,0,0,.1);
+    text-align: center;
+    font-size: 30px;
+}
+.base_stats > thead > tr > th {
+    font-size: 25px;
+    background: rgba(0,0,0,.1);
+}
+.base_stats > tbody > tr > th {
+    width: 50%;
+}
+.moves_list > thead > tr:first-child {
+    font-size: 25px;
+    background: rgba(0,0,0,.1);
+}
+.moves_list {
+    position: relative;
+}
+.moves_list > thead > tr:last-child {
+    position: sticky;
+    top: 0;
+    background: lightgray;
+    border: lightgray;
+}
+th, td {
+    border-style: none;
+}
+.base_stats > tbody > tr:nth-child(1) > th {
+    background: greenyellow;
+}
+.base_stats > tbody > tr:nth-child(2) > th {
+    background: lightcoral;
+}
+.base_stats > tbody > tr:nth-child(3) > th {
+    background: burlywood;
+}
+.base_stats > tbody > tr:nth-child(4) > th {
+    background: plum;
+}
+.base_stats > tbody > tr:nth-child(5) > th {
+    background: goldenrod;
+}
+.base_stats > tbody > tr:nth-child(6) > th {
+    background: skyblue;
+}
+
+.move_list_buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: rgba(255,255,255,0.5);
+    max-height: 350px;
+    margin: 20px 0 20px 20px;
+    border-radius: 20px 0 0 20px;
+    padding: 10px;
+}
+.move_list_buttons > button {
+    font-weight: bold;
+    margin: 10px 0;
+}

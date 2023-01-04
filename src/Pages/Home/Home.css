@@ -15,6 +15,8 @@ body {
 }
 .total_table {
     display: flex;
+    margin: 0 auto;
+    width: 40%
 }
 .table_sidebar {
     margin: 40px 20px 20px 0;
@@ -106,12 +108,12 @@ body {
 }
 .div_for_buttons {
     margin: 0 auto;
-    width: 100%;
+    width: 50%;
 }
 
 .table_css {
     background: white;
-    max-width: 400px;
+    max-width: 100%;
     box-sizing: initial;
     overflow: scroll;
 }
@@ -203,7 +205,35 @@ th, td {
     transition: width 0.5s, height 0.5s, opacity 0.5s 0.5s;
 }
 
-.bookmark_display > .container {
+.bookmark_display > .moveList_page {
     display: flex;
     justify-content: center;
+}
+
+.homePage_container {
+    display: flex;
+}
+
+@media (max-width: 900px) {
+    .total_table {
+        display: flex;
+        width: 90%;
+        margin: 0 auto;
+        justify-content: center;
+    }
+    .homePage_container {
+        flex-direction: column;
+    }
+    .div_for_buttons {
+        width: 90%;
+    }
+    .moves_list {
+        width: 100% !important;
+    }
+    .table_moves_list {
+        width: 100%;
+    }
+    .div_for_buttons {
+        width: 90%;
+    }
 }

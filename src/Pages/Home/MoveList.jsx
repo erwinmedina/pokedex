@@ -69,72 +69,71 @@ export default function MoveList({currentPokemon}) {
     }, [currentPokemon])
 
     return (
+        <div className="moveList_page"> 
+            <div className="move_list_buttons">
+                <button onClick={handleMoveListButtons} id="1" className="btn btn-primary">Egg</button>
+                <button onClick={handleMoveListButtons} id="2" className="btn btn-success">Machine</button>
+                <button onClick={handleMoveListButtons} id="3" className="btn btn-warning">Tutor</button>
+                <button onClick={handleMoveListButtons} id="4" className="btn btn-danger">Level</button>
+            </div>
         
-        <div className="container"> 
-        <div className="move_list_buttons">
-            <button onClick={handleMoveListButtons} id="1" className="btn btn-primary">Egg</button>
-            <button onClick={handleMoveListButtons} id="2" className="btn btn-success">Machine</button>
-            <button onClick={handleMoveListButtons} id="3" className="btn btn-warning">Tutor</button>
-            <button onClick={handleMoveListButtons} id="4" className="btn btn-danger">Level</button>
+            {/* ---------------------------------- */}
+            {/* This handles the move list portion */}
+            {/* ---------------------------------- */}
+            <div className="table_css table_moves_list">
+                <table class="table table-striped basic_info moves_list">
+                    <thead>
+                        <tr>
+                            <th colspan="3" scope="col">Move List</th>
+                        </tr>
+                        <tr>
+                            <th>Move Name</th>
+                            <th>Level Learned</th>
+                            <th>Learned By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {moveListButtons[0].active == 1 ? 
+                            moveListEgg.map(moveEgg => 
+                                <tr>
+                                    <td>{moveEgg.move.name}</td>
+                                    <td>{moveEgg.version_group_details[0].level_learned_at}</td>
+                                    <td>{moveEgg.version_group_details[0].move_learn_method.name}</td>
+                                </tr>   
+                            )
+                        :
+                        moveListButtons[1].active == 1 ?
+                            moveListMachine.map(moveMachine => 
+                                <tr>
+                                    <td>{moveMachine.move.name}</td>
+                                    <td>{moveMachine.version_group_details[0].level_learned_at}</td>
+                                    <td>{moveMachine.version_group_details[0].move_learn_method.name}</td>
+                                </tr>   
+                            )
+                        :
+                        moveListButtons[2].active == 1 ?
+                            moveListTutor.map(moveTutor => 
+                                <tr>
+                                    <td>{moveTutor.move.name}</td>
+                                    <td>{moveTutor.version_group_details[0].level_learned_at}</td>
+                                    <td>{moveTutor.version_group_details[0].move_learn_method.name}</td>
+                                </tr>   
+                            )
+                        : 
+                        moveListButtons[3].active == 1 ?
+                            moveListLevel.map(moveLevel => 
+                                <tr>
+                                    <td>{moveLevel.move.name}</td>
+                                    <td>{moveLevel.version_group_details[0].level_learned_at}</td>
+                                    <td>{moveLevel.version_group_details[0].move_learn_method.name}</td>
+                                </tr>   
+                            )
+                        :
+                        ""
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
-    
-        {/* ---------------------------------- */}
-        {/* This handles the move list portion */}
-        {/* ---------------------------------- */}
-        <div className="table_css table_moves_list">
-            <table class="table table-striped basic_info moves_list">
-                <thead>
-                    <tr>
-                        <th colspan="3" scope="col">Move List</th>
-                    </tr>
-                    <tr>
-                        <th>Move Name</th>
-                        <th>Level Learned</th>
-                        <th>Learned By</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {moveListButtons[0].active == 1 ? 
-                        moveListEgg.map(moveEgg => 
-                            <tr>
-                                <td>{moveEgg.move.name}</td>
-                                <td>{moveEgg.version_group_details[0].level_learned_at}</td>
-                                <td>{moveEgg.version_group_details[0].move_learn_method.name}</td>
-                            </tr>   
-                        )
-                    :
-                    moveListButtons[1].active == 1 ?
-                        moveListMachine.map(moveMachine => 
-                            <tr>
-                                <td>{moveMachine.move.name}</td>
-                                <td>{moveMachine.version_group_details[0].level_learned_at}</td>
-                                <td>{moveMachine.version_group_details[0].move_learn_method.name}</td>
-                            </tr>   
-                        )
-                    :
-                    moveListButtons[2].active == 1 ?
-                        moveListTutor.map(moveTutor => 
-                            <tr>
-                                <td>{moveTutor.move.name}</td>
-                                <td>{moveTutor.version_group_details[0].level_learned_at}</td>
-                                <td>{moveTutor.version_group_details[0].move_learn_method.name}</td>
-                            </tr>   
-                        )
-                    : 
-                    moveListButtons[3].active == 1 ?
-                        moveListLevel.map(moveLevel => 
-                            <tr>
-                                <td>{moveLevel.move.name}</td>
-                                <td>{moveLevel.version_group_details[0].level_learned_at}</td>
-                                <td>{moveLevel.version_group_details[0].move_learn_method.name}</td>
-                            </tr>   
-                        )
-                    :
-                    ""
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
     )
 }

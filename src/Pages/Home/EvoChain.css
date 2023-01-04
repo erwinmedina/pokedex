@@ -48,3 +48,12 @@
     color: white;
     pointer-events: none;
 }
+
+@media (max-width: 900px) {
+    .evo_title {
+        max-width: 100vw;
+    }
+    .div_arrow {
+        margin: 0 10px;
+    }
+}

@@ -244,78 +244,78 @@ export default function Home() {
             {/* This container holds the top of the page: */}
             {/* Basic Info, Base Stats, and Buttons       */}
             {/* ----------------------------------------- */}
-            <div className="container">
-            {/* ----------------------------------------- */}
-            {/* This table handles the basic info portion */}
-            {/* ----------------------------------------- */}
-            <div className="total_table">
-                <div className="table_css table_basic">
-                    <table class="table table-striped basic_info">
-                        <thead className="table_sprite_row">
-                            <tr>
-                                <th colspan="2" scope="row">{currentPokemon.sprites == null ? "" : <img className="pokeSprite" src={currentPokemon.sprites.front_default} alt="" />}
-                                    <p>{currentPokemon == null ? "" : currentPokemon.name}</p>
-                                </th>
-                            </tr>
-                        </thead>
+            <div className="homePage_container">
+                {/* ----------------------------------------- */}
+                {/* This table handles the basic info portion */}
+                {/* ----------------------------------------- */}
+                <div className="total_table">
+                    <div className="table_css table_basic">
+                        <table class="table table-striped basic_info">
+                            <thead className="table_sprite_row">
+                                <tr>
+                                    <th colspan="2" scope="row">{currentPokemon.sprites == null ? "" : <img className="pokeSprite" src={currentPokemon.sprites.front_default} alt="" />}
+                                        <p>{currentPokemon == null ? "" : currentPokemon.name}</p>
+                                    </th>
+                                </tr>
+                            </thead>
 
-                        <tbody>
+                            <tbody>
 
-                            <tr>
-                                <th scope="row">ID #</th>
-                                <td>
-                                    {currentPokemon == null ? "" : currentPokemon.id}
-                                </td>
-                            </tr>
-                            
-                            <tr>
-                                <th scope="row">Type 1</th>
-                                <td>
-                                    {currentPokemon.types == null ? "" : currentPokemon.types[0].type.name.toUpperCase()}
-                                </td>
-                            </tr>
-                            
-                            {currentPokemon.types == null ? 
-                                "" 
-                                : 
-                                currentPokemon.types[1] == null ? 
-                                "" 
-                                :
-                                <tr>    
-                                    <th scope="row">Type 2</th>
+                                <tr>
+                                    <th scope="row">ID #</th>
                                     <td>
-                                        {currentPokemon.types[1].type.name.toUpperCase()}
+                                        {currentPokemon == null ? "" : currentPokemon.id}
                                     </td>
                                 </tr>
-                            }
-                        </tbody>
-                        <thead>
-                            <tr>
-                                <th colspan="2" scope="col">Base Stats</th>
-                            </tr>
-                        </thead>
-                        
-                        <tbody className="base_stats">
-
-                            {Object.keys(currentPokemon).length && currentPokemon.stats.map(currentPoke => 
+                                
                                 <tr>
-                                    <th scope="row">{currentPoke.stat.name.toUpperCase()}</th>
-                                    <td>{currentPoke.base_stat}</td>
+                                    <th scope="row">Type 1</th>
+                                    <td>
+                                        {currentPokemon.types == null ? "" : currentPokemon.types[0].type.name.toUpperCase()}
+                                    </td>
                                 </tr>
-                            )}
+                                
+                                {currentPokemon.types == null ? 
+                                    "" 
+                                    : 
+                                    currentPokemon.types[1] == null ? 
+                                    "" 
+                                    :
+                                    <tr>    
+                                        <th scope="row">Type 2</th>
+                                        <td>
+                                            {currentPokemon.types[1].type.name.toUpperCase()}
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <thead>
+                                <tr>
+                                    <th colspan="2" scope="col">Base Stats</th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody className="base_stats">
 
-                        </tbody>
-                    </table>
-                </div>
-                <div onClick={handle_sidebar} className="table_sidebar">
-                    <div id="1" className="sidebar_evoChain">
-                        <p id="1" >Evolution Chain</p>
+                                {Object.keys(currentPokemon).length && currentPokemon.stats.map(currentPoke => 
+                                    <tr>
+                                        <th scope="row">{currentPoke.stat.name.toUpperCase()}</th>
+                                        <td>{currentPoke.base_stat}</td>
+                                    </tr>
+                                )}
+
+                            </tbody>
+                        </table>
                     </div>
-                    <div id="2" className="sidebar_moveList">
-                        <p id="2">Move List</p>
+                    <div onClick={handle_sidebar} className="table_sidebar">
+                        <div id="1" className="sidebar_evoChain">
+                            <p id="1" >Evolution Chain</p>
+                        </div>
+                        <div id="2" className="sidebar_moveList">
+                            <p id="2">Move List</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
                 
                 <div className="div_for_buttons">

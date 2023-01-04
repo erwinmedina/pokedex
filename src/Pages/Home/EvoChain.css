@@ -1,8 +1,10 @@
 .evo_title {
     background: rgba(0,0,0,.1);
+    border-radius: 20px;
     text-align: center;
     vertical-align: middle;
-    margin: 20px 0;
+    margin: 20px auto;
+    max-width: 700px;
 }
 .evo_title > h3 {
     display: flex;
@@ -10,6 +12,7 @@
     font-family: "Sriracha";
     font-size: 40px;
     padding: 10px;
+    border-radius: 50px 50px 0 0;
 }
 .evo_chain_sprites {
     display: flex;
@@ -19,6 +22,7 @@
     justify-content: center;
     font-family: "Sriracha";
     background: rgba(255,255,255,.7);
+    border-radius: 0 0 20px 20px;
 }
 .evo_chain_solo {
     display: flex;
@@ -31,7 +35,7 @@
 
 .div_sprites:hover {
     background: white;
-    border-radius: 50%;
+    border-radius: 10%;
     cursor: pointer;
 }
 .div_arrow {

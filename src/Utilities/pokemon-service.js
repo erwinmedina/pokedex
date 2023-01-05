@@ -6,10 +6,16 @@ export function getAllPokemon() {
     .catch(error => console.log('Error while fetching all of the pokemon:', error))
 }
 
-export function getInitialPokemon() {
-    return fetch(`${BASE_URL}/pokemon?limit=151&offset=0`)
+// export function getInitialPokemon() {
+//     return fetch(`${BASE_URL}/pokemon?limit=151&offset=0`)
+//     .then(res => res.json())
+//     .catch(error => console.log('Error while fetching the limited set of pokemon [1-151]:', error))
+// }
+
+export function getGenerationPokemon(start, end) {
+    return fetch(`${BASE_URL}/pokemon?limit=${end}&offset=${start}`)
     .then(res => res.json())
-    .catch(error => console.log('Error while fetching the limited set of pokemon [1-151]:', error))
+    .catch(error => console.log(`Error while fetching the generation range of ${start} and ${start + end} pokemon: `, error))
 }
 
 export function getPokemon(name) {
@@ -22,6 +28,12 @@ export function getPokemonTypes() {
     return fetch(`${BASE_URL}/type`)
     .then(res => res.json())
     .catch(error => console.log('Error while fetching Pokemon Types:', error))
+}
+
+export function getAllPokemonWithTypes(typeID) {
+    return fetch(`${BASE_URL}/type/${typeID}`)
+    .then(res => res.json())
+    .catch(error => console.log("Error while fetching all Pokemon with specific type:", error))
 }
 
 export function getPokemonSpecies(name) {

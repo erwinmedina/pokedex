@@ -11,57 +11,64 @@ export default function Home() {
         {
             generation: "G1",
             start: 0,
-            end: 150,
+            end: 151,
             selected: 1
             
         },
         {
             generation: "G2",
             start: 151,
-            end: 250,
+            end: 251,
             selected: 0
         },
         {
             generation: "G3",
             start: 251,
-            end: 385,
+            end: 386,
             selected: 0
         },
         {
             generation: "G4",
             start: 386,
-            end: 492,
+            end: 493,
             selected: 0
         },
         {
             generation: "G5",
             start: 493,
-            end: 648,
+            end: 649,
             selected: 0
         },
         {
             generation: "G6",
             start: 649,
-            end: 720,
+            end: 721,
             selected: 0
         },
         {
             generation: "G7",
             start: 721,
-            end: 808,
+            end: 809,
             selected: 0
         }
     ]);
+    const [activeGeneration, setActiveGeneration] = useState({
+        generation: "G1",
+        start: 0,
+        end: 151,
+        selected: 1
+        })
     const [allPokemon, setAllPokemon] = useState([]);
     const [filteredPokemon, setFilteredPokemon] = useState([]);
     const [selectedPokemon, setSelectedPokemon] = useState(1)
     const [currentPokemon, setCurrentPokemon] = useState([]);
     const [filteredPokeObject, setFilteredPokeObject] = useState([])
     const [listOfTypes, setListOfTypes] = useState([]);
+    const [currentType, setCurrentType] = useState(7);
     const [buttonChoices, setButtonChoices] = useState([
         {
             name: "Generation",
-            selected: 0
+            selected: 1
         },
         {
             name: "Type",
@@ -73,7 +80,7 @@ export default function Home() {
         },
         {
             name: "None",
-            selected: 1
+            selected: 0
         }
     ]);
     const [pokeSpecies, setPokeSpecies] = useState([]);
@@ -101,9 +108,15 @@ export default function Home() {
             tempGen[i].selected = 0;
             if (event.target.value === tempGen[i].generation) {
                 tempGen[i].selected = 1;
+                setActiveGeneration(tempGen[i]);
             }
         }
         setGeneration(tempGen);
+
+    }
+
+    function handleTypeChange(event) {
+        setCurrentType(parseInt(event.target.value));
     }
     
     // ------------------------------------------------------ //
@@ -202,13 +215,15 @@ export default function Home() {
     // ----------------------------------- //
     // This gets the initial 1-151 pokemon //
     // ----------------------------------- //
-        async function getInitialPokemon() {
-            const initialPoke = await pokemonService.getInitialPokemon();
-            setFilteredPokemon(initialPoke.results);
-        } getInitialPokemon();
+        // async function getInitialPokemon() {
+        //     const initialPoke = await pokemonService.getInitialPokemon();
+        //     setFilteredPokemon(initialPoke.results);
+        // } getInitialPokemon();
 
         async function getPokemonType() {
             const pokeTypes = await pokemonService.getPokemonTypes();
+            pokeTypes.results.pop(-1);
+            pokeTypes.results.pop(-1);
             pokeTypes.results.sort((a,b) => a.name > b.name ? 1:-1);
             setListOfTypes(pokeTypes.results);
         } getPokemonType();
@@ -218,23 +233,53 @@ export default function Home() {
     // This filters the list from 809 values to just that generation, to simplify the list //
     // ----------------------------------------------------------------------------------- //
     useEffect(function() {
-        async function filterPokemon() {
-            let tempPokeArray = [...allPokemon];
-            let tempPokeObject = [...filteredPokeObject];
-            for (let i = 0; i < generation.length; i++) {
-                if (generation[i].selected === 1) {
-                    for (let j = generation[i].start; i < generation[i].end + 1; i++) {
-                        // tempPokeObject.push({
-                        //     value: tempPokeArray[generation[i]]
-                        //     label: 
-                        // })
+        if (buttonChoices[2].selected != 1) {
+            async function newGeneration() {
+                const newGenPokemon = await pokemonService.getGenerationPokemon(activeGeneration.start, activeGeneration.end - activeGeneration.start);
+                setFilteredPokemon(newGenPokemon.results)
+            } newGeneration();
+        }
+    }, [buttonChoices, generation])
+
+    // ------------------------------------------------------ //
+    // This filters the poke type from the current generation //
+    // ------------------------------------------------------ //\
+    useEffect(function() {
+        async function listPokemonWithTypeSelected() {
+            let tempFilteredPoke = [];
+
+            // ----------------------------------------------- //
+            // This will show all pokemon with a specific type //
+            // ----------------------------------------------- //
+            if (buttonChoices[1].selected == 1) {
+                const pokeTypeList = await pokemonService.getAllPokemonWithTypes(currentType);
+                setFilteredPokeObject(pokeTypeList.pokemon);
+                pokeTypeList.pokemon.forEach(poke => {
+                    if (parseInt(poke.pokemon.url.split('/')[6]) <= generation[6].end) {
+                        tempFilteredPoke = [...tempFilteredPoke, poke.pokemon];
                     }
-                    tempPokeArray = tempPokeArray.slice(generation[i].start, generation[i].end + 1);
-                }
+                })
+                setFilteredPokemon(tempFilteredPoke);
             }
-            setFilteredPokemon(tempPokeArray);
-        } filterPokemon();
-    }, [generation])
+
+            // ------------------------------------------------------------------------ //
+            // This shows all pokemon with a specific type within a specific generation //
+            // ------------------------------------------------------------------------ //
+            else if (buttonChoices[2].selected == 1) {
+                const newGenPokemon = await pokemonService.getGenerationPokemon(activeGeneration.start, activeGeneration.end - activeGeneration.start);
+                setFilteredPokemon(newGenPokemon.results)
+                const pokeTypeList = await pokemonService.getAllPokemonWithTypes(currentType);
+                setFilteredPokeObject(pokeTypeList.pokemon);
+                pokeTypeList.pokemon.forEach(poke => {
+                    if (parseInt(poke.pokemon.url.split('/')[6]) >= activeGeneration.start && parseInt(poke.pokemon.url.split('/')[6]) <= activeGeneration.end) {
+                        tempFilteredPoke = [...tempFilteredPoke, poke.pokemon];
+                    }
+                })
+                setFilteredPokemon(tempFilteredPoke);
+            }
+
+        } listPokemonWithTypeSelected();
+    }, [buttonChoices, generation, currentType])
 
 
     return (
@@ -322,88 +367,86 @@ export default function Home() {
                     {/* -------------------------------------- */}
                     {/* This handles the buttons and filtering */}
                     {/* -------------------------------------- */}
-                    <div>
+                    <div className="buttonFilterSection">
                         {/* <h3>Filter By:</h3>
                         <input type="text" placeholder="Search.."></input> */}
-                        <br/>
-                        <br />
-                        {/* <button value="Generation" onClick={handleButtons}>Generation</button> */}
-                        {/* <button value="Type" onClick={handleButtons}>Type</button> */}
-                        {/* <button value="Both" onClick={handleButtons}>Both</button> */}
-                        {/* <button value="None" onClick={handleButtons}>None</button> */}
-                        <br />
-                        <button disabled={disabled} className="btn btn-primary random_button" onClick={handleRandom}>RANDOM</button>
-
-                    </div>
-                
-                    <br />
-                    
-                    {/* ---------------------------------------------- */}
-                    {/* This handles which generation we're looking at */}
-                    {/* ---------------------------------------------- */}
-                    {buttonChoices[0].selected === 1 || buttonChoices[2].selected === 1 ?
-                        <div>
-                            <select onChange={handleGen}>
-                                <option value="G1">Generation 1</option>
-                                <option value="G2">Generation 2</option>
-                                <option value="G3">Generation 3</option>
-                                <option value="G4">Generation 4</option>
-                                <option value="G5">Generation 5</option>
-                                <option value="G6">Generation 6</option>
-                                <option value="G7">Generation 7</option>
-                            </select>
+                        <div className="buttonFilterSection_buttons">
+                            <button className="btn btn-primary" value="Generation" onClick={handleButtons}>Generation</button>
+                            <button className="btn btn-primary" value="Type" onClick={handleButtons}>Type</button>
+                            <button className="btn btn-primary" value="Both" onClick={handleButtons}>Gen + Type</button>
+                            {/* <button className="btn btn-primary" value="None" onClick={handleButtons}>None</button> */}
+                            <button disabled={disabled} className="btn btn-primary random_button" onClick={handleRandom}>RANDOM</button>
                         </div>
-                        :
-                        ""
-                    }
 
-                    {/* ----------------------------- */}
-                    {/* This handles the pokemon type */}
-                    {/* ----------------------------- */}
-                    {buttonChoices[1].selected === 1 || buttonChoices[2].selected === 1 ?
-                        <div >
-                            <select >
-                                {listOfTypes.length && listOfTypes.map(type =>
-                                    <option>{type.name}</option>)}
-                            </select>
-                        </div>
-                        :
-                        ""
-                    }
-
-                    {/* ------------------------------------------------ */}
-                    {/* This handles the dropdown pokemon selector thing */}
-                    {/* ------------------------------------------------ */}
-                    <div>
-                        <div className="container poke_selector">
-                            <div className="input-group mb-3">
-                                <select className="form-select" id="inputGroupSelect01" onChange={handlePokemon}>
-                                    {filteredPokemon && filteredPokemon.map(pokemon => 
-                                    <option value={pokemon.url.split('/')[6]}>{pokemon.url.split('/')[6]} - {pokemon.name}</option>)}
-                                </select>
-                            </div>
-                        </div>
-                        {bookmarks[0].active == 1 || bookmarks[1].active == 1 ?
-                            <div className="bookmark_display">
-                                {bookmarks[1].active == 1 ? 
-                                    <MoveList
-                                    currentPokemon={currentPokemon}
-                                    />
-                                :
-                                bookmarks[0].active == 1 ?
-                                    <EvoChain 
-                                    evo_chain={evo_chain} 
-                                    setEvo_chain={setEvo_chain} 
-                                    currentpokemon={currentPokemon}
-                                    setSelectedPokemon={setSelectedPokemon}
-                                    />
+                        <div className="selectorsAfterFilter">
+                            {/* ---------------------------------------------- */}
+                            {/* This handles which generation we're looking at */}
+                            {/* ---------------------------------------------- */}
+                            {buttonChoices[0].selected === 1 || buttonChoices[2].selected === 1 ?
+                                <div className="input-group mb-3">
+                                    <select className="form-select" onChange={handleGen}>
+                                        <option value="G1">Generation 1</option>
+                                        <option value="G2">Generation 2</option>
+                                        <option value="G3">Generation 3</option>
+                                        <option value="G4">Generation 4</option>
+                                        <option value="G5">Generation 5</option>
+                                        <option value="G6">Generation 6</option>
+                                        <option value="G7">Generation 7</option>
+                                    </select>
+                                </div>
                                 :
                                 ""
+                            }
+
+                            {/* ----------------------------- */}
+                            {/* This handles the pokemon type */}
+                            {/* ----------------------------- */}
+                            {buttonChoices[1].selected === 1 || buttonChoices[2].selected === 1 ?
+                                <div className="input-group mb-3">
+                                    <select onChange={handleTypeChange} className="form-select">
+                                        {listOfTypes.length && listOfTypes.map(type =>
+                                            <option value={type.url.split('/')[6]}>{type.name}</option>)}
+                                    </select>
+                                </div>
+                                :
+                                ""
+                            }
+                            <div className="poke_selector">
+                                <div className="input-group mb-3">
+                                    <select className="form-select" id="inputGroupSelect01" onChange={handlePokemon}>
+                                        {filteredPokemon && filteredPokemon.map(pokemon => 
+                                        <option value={pokemon.url.split('/')[6]}>{pokemon.url.split('/')[6]} - {pokemon.name}</option>)}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                            {/* ------------------------------------------------ */}
+                            {/* This handles the dropdown pokemon selector thing */}
+                            {/* ------------------------------------------------ */}
+                            <div>
+                                {bookmarks[0].active == 1 || bookmarks[1].active == 1 ?
+                                    <div className="bookmark_display">
+                                        {bookmarks[1].active == 1 ? 
+                                            <MoveList
+                                            currentPokemon={currentPokemon}
+                                            />
+                                        :
+                                        bookmarks[0].active == 1 ?
+                                            <EvoChain 
+                                            evo_chain={evo_chain} 
+                                            setEvo_chain={setEvo_chain} 
+                                            currentpokemon={currentPokemon}
+                                            setSelectedPokemon={setSelectedPokemon}
+                                            />
+                                        :
+                                        ""
+                                        }
+                                    </div>
+                                    :
+                                    ""
                                 }
                             </div>
-                            :
-                            ""
-                        }
                     </div>
                 </div>
             </div>

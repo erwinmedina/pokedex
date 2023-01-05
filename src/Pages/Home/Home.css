@@ -3,11 +3,32 @@ body {
     background: radial-gradient(circle, rgba(215,65,65,1) 0%, rgba(150,148,233,1) 100%);   
 }
 .random_button {
-    font-size: 50px;
+    margin: 20px;
 }
-.poke_selector > div {
-    margin: 0 auto;
-    width: auto !important;
+.form-select {
+    text-align-last: center;
+}
+.buttonFilterSection_buttons {
+    width: 50%;
+    margin: 20px auto;
+    padding: 15px;
+    border-radius: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: rgba(255,255,255,.9);
+    font-family: "Sriracha";
+}
+.selectorsAfterFilter {
+    width: 50%;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    font-family: "Sriracha";
+    text-align: center;
+}
+
+.buttonFilterSection_buttons > button {
+    margin: 1px;
 }
 .pokeSprite {
     margin: 10px;
@@ -222,7 +243,8 @@ th, td {
         justify-content: center;
     }
     .homePage_container {
-        flex-direction: column;
+        flex-direction: column-reverse;
+
     }
     .div_for_buttons {
         width: 90%;

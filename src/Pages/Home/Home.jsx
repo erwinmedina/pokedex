@@ -370,53 +370,70 @@ export default function Home() {
                     <div className="buttonFilterSection">
                         {/* <h3>Filter By:</h3>
                         <input type="text" placeholder="Search.."></input> */}
-                        <div className="buttonFilterSection_buttons">
-                            <button className="btn btn-primary" value="Generation" onClick={handleButtons}>Generation</button>
-                            <button className="btn btn-primary" value="Type" onClick={handleButtons}>Type</button>
-                            <button className="btn btn-primary" value="Both" onClick={handleButtons}>Gen + Type</button>
-                            {/* <button className="btn btn-primary" value="None" onClick={handleButtons}>None</button> */}
-                            <button disabled={disabled} className="btn btn-primary random_button" onClick={handleRandom}>RANDOM</button>
-                        </div>
-
-                        <div className="selectorsAfterFilter">
-                            {/* ---------------------------------------------- */}
-                            {/* This handles which generation we're looking at */}
-                            {/* ---------------------------------------------- */}
-                            {buttonChoices[0].selected === 1 || buttonChoices[2].selected === 1 ?
-                                <div className="input-group mb-3">
-                                    <select className="form-select" onChange={handleGen}>
-                                        <option value="G1">Generation 1</option>
-                                        <option value="G2">Generation 2</option>
-                                        <option value="G3">Generation 3</option>
-                                        <option value="G4">Generation 4</option>
-                                        <option value="G5">Generation 5</option>
-                                        <option value="G6">Generation 6</option>
-                                        <option value="G7">Generation 7</option>
-                                    </select>
+                        <div className="userSearch">
+                            <div className="userFilter">
+                                <label className="filter_label form-check-label">Select a filter..</label>
+                                <div className="buttonFilterSection_buttons">
+                                    <button className="btn btn-dark" value="Generation" onClick={handleButtons}>Generation</button>
+                                    <button className="btn btn-dark" value="Type" onClick={handleButtons}>Type</button>
+                                    <button className="btn btn-dark" value="Both" onClick={handleButtons}>Gen + Type</button>
+                                    {/* <button className="btn btn-primary" value="None" onClick={handleButtons}>None</button> */}
+                                    {/* <button disabled={disabled} className="btn btn-primary random_button" onClick={handleRandom}>RANDOM</button> */}
                                 </div>
-                                :
-                                ""
-                            }
+                            </div>
 
-                            {/* ----------------------------- */}
-                            {/* This handles the pokemon type */}
-                            {/* ----------------------------- */}
-                            {buttonChoices[1].selected === 1 || buttonChoices[2].selected === 1 ?
-                                <div className="input-group mb-3">
-                                    <select onChange={handleTypeChange} className="form-select">
-                                        {listOfTypes.length && listOfTypes.map(type =>
-                                            <option value={type.url.split('/')[6]}>{type.name}</option>)}
-                                    </select>
-                                </div>
-                                :
-                                ""
-                            }
-                            <div className="poke_selector">
-                                <div className="input-group mb-3">
-                                    <select className="form-select" id="inputGroupSelect01" onChange={handlePokemon}>
-                                        {filteredPokemon && filteredPokemon.map(pokemon => 
-                                        <option value={pokemon.url.split('/')[6]}>{pokemon.url.split('/')[6]} - {pokemon.name}</option>)}
-                                    </select>
+                            <div className="selectorsAfterFilter">
+                                {/* ---------------------------------------------- */}
+                                {/* This handles which generation we're looking at */}
+                                {/* ---------------------------------------------- */}
+                                {buttonChoices[0].selected === 1 || buttonChoices[2].selected === 1 ?
+                                    <div>
+                                        <label className="form-check-label">Select a generation..</label>
+                                        <div className="input-group mb-3">
+                                            <select className="form-select" onChange={handleGen}>
+                                                <option value="G1">Generation 1</option>
+                                                <option value="G2">Generation 2</option>
+                                                <option value="G3">Generation 3</option>
+                                                <option value="G4">Generation 4</option>
+                                                <option value="G5">Generation 5</option>
+                                                <option value="G6">Generation 6</option>
+                                                <option value="G7">Generation 7</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    :
+                                    ""
+                                }
+
+                                {/* ----------------------------- */}
+                                {/* This handles the pokemon type */}
+                                {/* ----------------------------- */}
+                                {buttonChoices[1].selected === 1 || buttonChoices[2].selected === 1 ?
+                                    <div>
+                                        <label className="form-check-label">Select a type..</label>
+                                        <div className="input-group mb-3">
+                                            <select onChange={handleTypeChange} className="form-select">
+                                                {listOfTypes.length && listOfTypes.map(type =>
+                                                    <option value={type.url.split('/')[6]}>{type.name}</option>)}
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    :
+                                    ""
+                                }
+                                <div className="poke_selector">
+                                    <div className="labelRandom">
+                                        <label className="form-check-label">Select a pokemon..</label>
+                                
+                                    </div>
+                                    <div className="input-group mb-3">
+                                        <select className="form-select" id="inputGroupSelect01" onChange={handlePokemon}>
+                                            {filteredPokemon && filteredPokemon.map(pokemon => 
+                                            <option value={pokemon.url.split('/')[6]}>{pokemon.url.split('/')[6]} - {pokemon.name}</option>)}
+                                        </select>
+                                        <button disabled={disabled} className="btn btn-sm btn-primary random_button" onClick={handleRandom}>RANDOM</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

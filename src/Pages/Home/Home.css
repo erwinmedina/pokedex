@@ -2,25 +2,32 @@ body {
     background: rgb(215,65,65);
     background: radial-gradient(circle, rgba(215,65,65,1) 0%, rgba(150,148,233,1) 100%);   
 }
+select:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+.labelRandom {
+    display: flex;
+}
 .random_button {
-    margin: 20px;
+    font-size: 12px;
 }
 .form-select {
     text-align-last: center;
 }
 .buttonFilterSection_buttons {
-    width: 50%;
-    margin: 20px auto;
-    padding: 15px;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
     border-radius: 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    background: rgba(255,255,255,.9);
+    display: flex;
+    flex-direction: column;
     font-family: "Sriracha";
 }
 .selectorsAfterFilter {
-    width: 50%;
-    margin: 20px auto;
+    width: 70%;
+    padding: 10px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     font-family: "Sriracha";
@@ -28,8 +35,22 @@ body {
 }
 
 .buttonFilterSection_buttons > button {
-    margin: 1px;
+    margin: 0px;
+    border-radius: 0px;
+    height: 33%;
+    border: .5px solid white;
+    border-top: 0;
+    border-bottom: 0;
 }
+.buttonFilterSection_buttons > button:first-child {
+    border-radius: .5rem .5rem 0 0;
+    border: .5px solid white;
+}
+.buttonFilterSection_buttons > button:last-child {
+    border-radius: 0 0 .5rem .5rem;
+    border: .5px solid white;
+}
+
 .pokeSprite {
     margin: 10px;
     transition: 1s;
@@ -112,9 +133,10 @@ body {
     max-height: 650px;
     margin: 20px 0 20px 20px;
     border-radius: 20px;
-    border: 1px solid rgba(0,0,0,.5);
+    border: 2px solid rgba(0,0,0,.75);
     padding: 5px;
     font-family: "Sriracha";
+    max-height: 600px;
 }
 .table_base_stats {
     max-height: 650px;
@@ -124,11 +146,13 @@ body {
 }
 .table_moves_list {
     max-height: 300px;
-    margin: 20px 20px 20px 0;
+    /* margin: 20px 20px 20px 0; */
     border-radius: 0px 20px 20px 0;
+    border: 2px solid rgba(0,0,0,.75);
+    border-left: 0px;
 }
 .div_for_buttons {
-    margin: 0 auto;
+    margin: 20px auto;
     width: 50%;
 }
 
@@ -157,8 +181,13 @@ body {
     text-align: center;
     font-size: 30px;
     border-radius: 15px 15px 0 0;
-
 }
+
+.base_stats {
+    flex-direction: column;
+    justify-content: space-around;
+}
+
 .base_stats > thead > tr > th {
     font-size: 25px;
     background: rgba(0,0,0,.1);
@@ -205,18 +234,30 @@ th, td {
 }
 
 .move_list_buttons {
-    display: flex;
     flex-direction: column;
     justify-content: center;
     background: rgba(255,255,255,0.5);
     max-height: 550px;
-    margin: 20px 0 20px 20px;
+    /* margin: 20px 0 20px 20px; */
     border-radius: 20px 0 0 20px;
-    padding: 10px;
+    border: 2px solid rgba(0,0,0,.75);
 }
+
+.move_list_buttons > button:first-child {
+    border-radius: 1.1rem 0rem 0rem 0rem;
+}
+.move_list_buttons > button:last-child {
+    border-radius: 0rem 0rem 0rem 1.1rem;
+}
+
 .move_list_buttons > button {
     font-weight: bold;
-    margin: 10px 0;
+    display: block;
+    width: 100%;
+    height: 25%;
+    border-radius: 0px;
+    border: 0px;
+    padding: 20px;
 }
 
 .fadein {
@@ -229,10 +270,44 @@ th, td {
 .bookmark_display > .moveList_page {
     display: flex;
     justify-content: center;
+    margin: 20px;
+    font-family: "Sriracha";
 }
 
 .homePage_container {
     display: flex;
+}
+
+.userSearch {
+    background: rgba(255,255,255,.5);
+    margin: 5px auto;
+    border-radius: 15px;
+    display: flex;
+    min-height: 250px;
+    max-width: 500px;
+    border: 2px solid rgba(0,0,0,.7);
+}
+.form-check-label {
+    display:block;
+    color: rgba(0,0,0,.5);
+    font-size: small;
+    width: 100%;
+    text-align: left;
+}
+.filter_label {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    font-family: "Sriracha";
+    justify-content: center;
+}
+.userFilter {
+    width: 30%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    background: rgba(255,255,255,.5);
+    border-radius: 15px 0 0 15px;
 }
 
 @media (max-width: 900px) {

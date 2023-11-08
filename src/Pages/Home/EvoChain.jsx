@@ -53,18 +53,19 @@ export default function EvoChain({evo_chain, setEvo_chain, currentpokemon, setSe
                     {evo_chain_info == null ? "" : evo_chain_info.map((evo_poke, i, arr) =>
                         <div className="evo_chain_solo">
                             <div onClick={(event) => updateCurrentPokemon(event, {evo_poke})} className="div_sprites">
-                                <img src={evo_poke.sprites.front_default} alt={evo_poke.name} />
-                                <p>{evo_poke.name}</p>
+                                <div className="poke_holder">
+                                    <img src={evo_poke.sprites.front_default} alt={evo_poke.name} />
+                                    <p>{evo_poke.name}</p>
+                                </div>
                             </div>
-                            <div>
-                                {arr.length - 1 === i ? "" : 
-                                    <div className="div_arrow">
-                                        <img className="arrow" src="https://cdn-icons-png.flaticon.com/512/724/724927.png" alt="" />
-                                    </div>
-                                }
-                            </div>
+                            {arr.length - 1 === i ? "" : 
+                                <div className="arrow_content">
+                                    <img className="arrow" src="https://cdn-icons-png.flaticon.com/512/724/724927.png" alt="" />
+                                </div>
+                            }
                         </div>
                     )}
+                    {console.log(evo_chain_info.length)}
 
                 </div>
 

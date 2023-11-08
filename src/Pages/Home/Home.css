@@ -61,7 +61,7 @@ select:focus {
     width: 40%
 }
 .table_sidebar {
-    margin: 40px 20px 20px 0;
+    margin: 40px 0 0 0;
     display: flex;
     flex-direction: column;
     justify-content:left;
@@ -130,13 +130,14 @@ select:focus {
 }
 
 .table_basic {
-    max-height: 650px;
+    max-width: 100%;
+    max-height: 593px;
     margin: 20px 0 20px 20px;
     border-radius: 20px;
     border: 2px solid rgba(0,0,0,.75);
-    padding: 5px;
     font-family: "Sriracha";
-    max-height: 600px;
+    width: 60%;
+    /* height: auto; */
 }
 .table_base_stats {
     max-height: 650px;
@@ -159,12 +160,12 @@ select:focus {
 .table_css {
     background: white;
     max-width: 100%;
+    max-height: auto;
     box-sizing: initial;
     overflow: scroll;
 }
 .basic_info {
-    width: 400px;
-    height: 100px;
+    max-width: 400px;
     margin: 0;
 }
 .table_sprite_row > tr, .table_sprite_row > tr > th {
@@ -270,12 +271,14 @@ th, td {
 .bookmark_display > .moveList_page {
     display: flex;
     justify-content: center;
-    margin: 20px;
+    margin: 30px 0 0 0;
     font-family: "Sriracha";
 }
 
 .homePage_container {
     display: flex;
+    height: 100vh;
+    overflow: scroll;
 }
 
 .userSearch {
@@ -313,7 +316,7 @@ th, td {
 @media (max-width: 900px) {
     .total_table {
         display: flex;
-        width: 90%;
+        width: 100%;
         margin: 0 auto;
         justify-content: center;
     }
@@ -332,5 +335,11 @@ th, td {
     }
     .div_for_buttons {
         width: 90%;
+    }
+}
+
+@media (max-width: 500px) {
+    .table_basic {
+        width: 80%;
     }
 }

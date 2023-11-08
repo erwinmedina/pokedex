@@ -16,10 +16,7 @@
 }
 .evo_chain_sprites {
     display: flex;
-    margin: 0 auto;
-    vertical-align: middle;
-    text-align: center;
-    justify-content: center;
+    justify-content: space-around;
     font-family: "Sriracha";
     background: rgba(255,255,255,.7);
     border-radius: 0 0 20px 20px;
@@ -27,10 +24,13 @@
 .evo_chain_solo {
     display: flex;
     align-items: center;
+    position: relative;
 }
 .div_sprites {
+    display: flex;
     margin: 10px;
     transition: .25s;
+    max-height: 135px;
 }
 
 .div_sprites:hover {
@@ -38,22 +38,55 @@
     border-radius: 10%;
     cursor: pointer;
 }
+.arrow_holder {
+    height: 135px;
+}
 .div_arrow {
-    margin: 0 40px;
-    color: white;
+    width: 50px;
+    height: 50px;
+    position: relative;
+
+}
+.arrow_content {
+    /* position: absolute; */
+    /* left: 150px; */
+
 }
 .arrow {
     height: 50px;
     width: 50px;
-    color: white;
     pointer-events: none;
+
 }
 
 @media (max-width: 900px) {
-    .evo_title {
-        max-width: 100vw;
+    .evo_chain_solo {
+        width: 33%;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .div_sprites {
+        display: flex;
+        justify-content: center;
+        width: 60%;
     }
     .div_arrow {
-        margin: 0 10px;
+        width: 40%;
+    }
+}
+
+@media (max-width: 500px) {
+    .div_sprites {
+        width: 60%;
+        transform: scale(.8);
+    }
+    .div_arrow {
+        width: 40%;
+        transform: scale(.7);
+    }
+    .arrow {
+        width: 100%;
+        height: auto;
     }
 }

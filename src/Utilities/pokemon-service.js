@@ -6,12 +6,6 @@ export function getAllPokemon() {
     .catch(error => console.log('Error while fetching all of the pokemon:', error))
 }
 
-// export function getInitialPokemon() {
-//     return fetch(`${BASE_URL}/pokemon?limit=151&offset=0`)
-//     .then(res => res.json())
-//     .catch(error => console.log('Error while fetching the limited set of pokemon [1-151]:', error))
-// }
-
 export function getGenerationPokemon(start, end) {
     return fetch(`${BASE_URL}/pokemon?limit=${end}&offset=${start}`)
     .then(res => res.json())

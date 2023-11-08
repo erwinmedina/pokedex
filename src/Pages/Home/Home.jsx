@@ -208,8 +208,10 @@ export default function Home() {
     // ------------------------------------------------- //
     useEffect(function() {
         async function getAllPokemon() {
-            const allThePokemon = await pokemonService.getAllPokemon();
-            setAllPokemon(allThePokemon.results);
+            if (allPokemon.length == 0) {
+                const allThePokemon = await pokemonService.getAllPokemon();
+                setAllPokemon(allThePokemon.results);
+            }
         } getAllPokemon();
     
     // ----------------------------------- //
@@ -221,11 +223,13 @@ export default function Home() {
         // } getInitialPokemon();
 
         async function getPokemonType() {
-            const pokeTypes = await pokemonService.getPokemonTypes();
-            pokeTypes.results.pop(-1);
-            pokeTypes.results.pop(-1);
-            pokeTypes.results.sort((a,b) => a.name > b.name ? 1:-1);
-            setListOfTypes(pokeTypes.results);
+            if (listOfTypes.length == 0) {
+                const pokeTypes = await pokemonService.getPokemonTypes();
+                pokeTypes.results.pop(-1);
+                pokeTypes.results.pop(-1);
+                pokeTypes.results.sort((a,b) => a.name > b.name ? 1:-1);
+                setListOfTypes(pokeTypes.results);
+            }
         } getPokemonType();
     }, [])
 

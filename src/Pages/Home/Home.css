@@ -340,6 +340,6 @@ th, td {
 
 @media (max-width: 500px) {
     .table_basic {
-        width: 80%;
+        width: 70%;
     }
 }
